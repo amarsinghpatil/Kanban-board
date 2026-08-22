@@ -22,7 +22,7 @@ export const initialTasks = [
     title: "Design Header and Board layout",
     description: "Write the visual layout using grid cols and columns with separate scroll zones.",
     status: "todo",
-    priority: "medium",
+    priority: "high",
     dueDate: "2026-06-27",
     tags: ["UI", "HTML"]
   }
