@@ -40,8 +40,14 @@ Build a Kanban-style task management application using React JS that allows user
 
 ---
 
-## 📌 Upcoming Features & Enhancements (Planned Next Steps)
+## 📌 Project Roadmap & Status
 
-1. **Delete Button on Task Cards:** Add a trash icon/delete button to task cards in [`Board.jsx`](file:///e:/Fullstack%20Project/GUVI%20Project/Submit%20Project_%20GUVI/Kanban%20Board/src/components/Board.jsx) to call `deleteTask(taskId)`.
-2. **Popup Modal Color Redesign:** Update input field backgrounds in [`NewTaskModal.jsx`](file:///e:/Fullstack%20Project/GUVI%20Project/Submit%20Project_%20GUVI/Kanban%20Board/src/components/NewTaskModal.jsx) from white to a soft matching yellow sticky-note tint (`bg-yellow-100/70` / `bg-amber-100/50`).
-3. **Archive System:** Create an "Archive" section/folder to store completed tasks so the *Done* column stays clean and organized.
+### ✅ Completed Features
+1. **Full Form Integration (`NewTaskModal.jsx`):** Captured form inputs with `useState` and connected `addTask()` to persist new tasks into `TaskContext` and `localStorage`.
+2. **Inline Styled Validation Banner:** Replaced browser `alert()` with a custom red `AlertCircle` warning badge inside the sticky note modal.
+3. **Hover Delete Button (`Board.jsx`):** Added a smooth hover trash icon (`Trash2`) on task cards using Tailwind `group-hover:opacity-100` that triggers `deleteTask(task.id)`.
+4. **Smart Badges & Friendly Date Formatting:** Conditional badge rendering for empty fields and formatted ISO dates to friendly text (e.g., `Aug 26`).
+
+### ⏳ Planned Next Steps
+1. **Popup Modal Color Redesign:** Update input field backgrounds in [`NewTaskModal.jsx`](file:///e:/Fullstack%20Project/GUVI%20Project/Submit%20Project_%20GUVI/Kanban%20Board/src/components/NewTaskModal.jsx) from white to a soft matching yellow sticky-note tint (`bg-yellow-100/70` / `bg-amber-100/50`).
+2. **Archive System:** Create an "Archive" section/folder to store completed tasks so the *Done* column stays clean and organized.
