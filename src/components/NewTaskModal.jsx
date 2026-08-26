@@ -87,7 +87,7 @@ export default function NewTaskModal({ isOpen, onClose}) {
               value={title} 
               onChange={(e) => setTitle(e.target.value)} 
               placeholder="e.g. Design Header Component" 
-              className="w-full bg-white/90 border border-yellow-300 rounded-lg p-2 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition-all shadow-inner"
+              className="w-full bg-amber-100/60 border border-amber-300/80 rounded-lg p-2.5 text-sm text-amber-950 placeholder-amber-800/40 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 transition-all shadow-inner font-medium"
             />
           </div>
 
@@ -98,7 +98,7 @@ export default function NewTaskModal({ isOpen, onClose}) {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Add detailed notes here..."
-              className="w-full bg-white/90 border border-yellow-300 rounded-lg p-2 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 h-24 resize-none transition-all shadow-inner"
+              className="w-full bg-amber-100/60 border border-amber-300/80 rounded-lg p-2.5 text-sm text-amber-950 placeholder-amber-800/40 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 h-24 resize-none transition-all shadow-inner font-medium"
             ></textarea>
           </div>
 
@@ -110,7 +110,7 @@ export default function NewTaskModal({ isOpen, onClose}) {
               value={tags}
               onChange={(e) => setTags(e.target.value)}
               placeholder="e.g. Feature, UI, Bug"
-              className="w-full bg-white/90 border border-yellow-300 rounded-lg p-2 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition-all shadow-inner"
+              className="w-full bg-amber-100/60 border border-amber-300/80 rounded-lg p-2.5 text-sm text-amber-950 placeholder-amber-800/40 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 transition-all shadow-inner font-medium"
             />
           </div>
 
@@ -122,10 +122,10 @@ export default function NewTaskModal({ isOpen, onClose}) {
               <select 
                 value={priority}
                 onChange={(e) => setPriority(e.target.value)}
-                className="w-full bg-white/90 border border-yellow-300 rounded-lg p-2 text-sm text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition-all cursor-pointer">
-                <option value="high">🔥 High</option>
-                <option value="medium">🚩 Medium</option>
-                <option value="low">🔹 Low</option>
+                className="w-full bg-amber-100/60 border border-amber-300/80 rounded-lg p-2.5 text-sm text-amber-950 font-medium focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 transition-all cursor-pointer shadow-inner">
+                <option value="high" className="bg-yellow-50 text-slate-800">🔥 High</option>
+                <option value="medium" className="bg-yellow-50 text-slate-800">🚩 Medium</option>
+                <option value="low" className="bg-yellow-50 text-slate-800">🔹 Low</option>
               </select>              
             </div>
       
@@ -136,7 +136,7 @@ export default function NewTaskModal({ isOpen, onClose}) {
                 type="date"
                 value={dueDate}
                 onChange={(e) => setDueDate(e.target.value)}
-                className="w-full bg-white/90 border border-yellow-300 rounded-lg p-2 text-sm text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition-all cursor-pointer"
+                className="w-full bg-amber-100/60 border border-amber-300/80 rounded-lg p-2.5 text-sm text-amber-950 font-medium focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 transition-all cursor-pointer shadow-inner"
               />
             </div>
           </div>
