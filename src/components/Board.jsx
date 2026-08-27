@@ -30,7 +30,7 @@ export default function Board({ onOpenNewTaskModal, onTaskClick }) {
     }
   }
 
-  function getprioritystyle(priority) {
+  function getPriorityStyle(priority) {
     if (priority === "high") {
       return "bg-red-100 text-red-800";
     } else if (priority === "medium") {
@@ -40,7 +40,7 @@ export default function Board({ onOpenNewTaskModal, onTaskClick }) {
     }
   }
 
-  function getpriorityicon(priority) {
+  function getPriorityIcon(priority) {
     if (priority === "high") {
       return <AlertCircle className="h-3.5 w-3.5 text-red-500" />;
     } else if (priority === "medium") {
@@ -113,8 +113,8 @@ export default function Board({ onOpenNewTaskModal, onTaskClick }) {
 
                     {task.priority && (
                       <div className="flex items-center gap-1.5 shrink-0">
-                        {getpriorityicon(task.priority)}
-                        <span className={"text-[10px] font-bold px-1.5 py-0.5 rounded uppercase " + getprioritystyle(task.priority)}>
+                        {getPriorityIcon(task.priority)}
+                        <span className={"text-[10px] font-bold px-1.5 py-0.5 rounded uppercase " + getPriorityStyle(task.priority)}>
                           {task.priority}
                         </span>
                       </div>
@@ -185,8 +185,8 @@ export default function Board({ onOpenNewTaskModal, onTaskClick }) {
 
                     {task.priority && (
                       <div className="flex items-center gap-1.5 shrink-0">
-                        {getpriorityicon(task.priority)}
-                        <span className={"text-[10px] font-bold px-1.5 py-0.5 rounded uppercase " + getprioritystyle(task.priority)}>
+                        {getPriorityIcon(task.priority)}
+                        <span className={"text-[10px] font-bold px-1.5 py-0.5 rounded uppercase " + getPriorityStyle(task.priority)}>
                           {task.priority}
                         </span>
                       </div>
@@ -257,8 +257,8 @@ export default function Board({ onOpenNewTaskModal, onTaskClick }) {
 
                     {task.priority && (
                       <div className="flex items-center gap-1.5">
-                        {getpriorityicon(task.priority)}
-                        <span className={"text-[10px] font-bold px-1.5 py-0.5 rounded uppercase " + getprioritystyle(task.priority)}>
+                        {getPriorityIcon(task.priority)}
+                        <span className={"text-[10px] font-bold px-1.5 py-0.5 rounded uppercase " + getPriorityStyle(task.priority)}>
                           {task.priority}
                         </span>
                       </div>

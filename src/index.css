@@ -6,8 +6,8 @@
 }
 
 body {
-  background-color: #faf7f0; /* Slate 950 (Dark Theme) */
-  color: #0f172a;            /* Slate 100 (Light text) */
+  background-color: #faf7f0; /* Light warm cream background */
+  color: #0f172a;            /* Dark slate text */
   font-family: var(--font-sans);
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
