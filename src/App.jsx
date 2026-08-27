@@ -27,18 +27,19 @@ export default function App() {
         onOpenNewTaskModal={() => setIsNewTaskModalOpen(true)}
         />
 
-        {/* Render the Create Modal */}
+        {/* Render the Create Modal and Edit Modal   */}
         <NewTaskModal
-          isOpen={isNewTaskModalOpen}
-          onClose={() => setIsNewTaskModalOpen(false)}
+          isOpen={isNewTaskModalOpen || selectedTask !== null}
+          onClose={() => 
+            {
+              setIsNewTaskModalOpen(false)
+              setSelectedTask(null)
+            }}
+
+          task={selectedTask}
         />
 
-        {/* Render the Edit Details Modal */}
-        <TaskModal
-          task={selectedTask}
-          isOpen={!!selectedTask} // !! converts object to boolean (true if card is selected, false if null)
-          onClose={() => setSelectedTask(null)}
-        />
+       
 
       </div>
     </TaskProvider>

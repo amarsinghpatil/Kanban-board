@@ -2,7 +2,7 @@ import React from "react";
 import { useTask } from "../context/TaskContext";
 import { Plus, AlertCircle, Calendar, Tag, ArrowDownCircle, Flag, Trash2 } from "lucide-react";
 
-export default function Board({ onOpenNewTaskModal }) {
+export default function Board({ onOpenNewTaskModal, onTaskClick }) {
   const { tasks, deleteTask } = useTask();
 
   console.log("📦 All Tasks from Context:", tasks);
@@ -51,14 +51,12 @@ export default function Board({ onOpenNewTaskModal }) {
   }
 
   return (
-    <main className="max-w-6xl mx-auto w-full px-6 py-8">
-      <div className="flex flex-col md:flex-row gap-4">
+    <main className="max-w-7xl mx-auto w-full px-6 py-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
         {/* TO DO COLUMN */}
-        <div className="flex-1 bg-slate-200/50 border border-slate-200/80 rounded-xl p-4 min-h-[600px] flex flex-col gap-4">
-
+        <div className="flex-1 bg-slate-200/50 border border-slate-200/80 rounded-xl p-4 h-[calc(100vh-170px)] flex flex-col gap-4">
           <div className="flex items-center justify-between h-10">
-            
             <div className="flex items-center gap-2">
               <h2 className="text-sm font-semibold text-slate-800">To do</h2>
               <span className="bg-slate-200 text-xs text-slate-700 px-2 py-0.5 rounded-full font-medium">
@@ -73,67 +71,70 @@ export default function Board({ onOpenNewTaskModal }) {
             </button>  
           </div>
 
-          {/* Adding card in todo column */}
-          {todo.map((task) => {
-            return (
-              <div key={task.id} className="group relative bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-lg shadow-sm text-slate-800 transition-all hover:shadow-md">
-                {/* Header row with Title and Hover Delete Button */}
-                <div className="flex items-start justify-between gap-2">
-                  <h3 className="font-semibold text-sm text-slate-900">{task.title}</h3>
-                  <button 
-                    onClick={() => deleteTask(task.id)}
-                    className="opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-red-100 rounded text-slate-400 hover:text-red-600 shrink-0"
-                    title="Delete task"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </button>
-                </div>
-                
-                <p className="text-xs text-slate-600 mt-1">{task.description}</p>
+          <div className="flex-1 overflow-y-auto flex flex-col gap-3 pr-1 py-1">
+            {/* Adding card in todo column */}
+            {todo.map((task) => {
+              return (
+                <div 
+                  key={task.id} 
+                  onClick={() => onTaskClick(task)} 
+                  className="group relative bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-lg shadow-sm text-slate-800 transition-all hover:shadow-md cursor-pointer min-w-0"
+                >
+                  {/* Header row with Title and Hover Delete Button */}
+                  <div className="flex items-start justify-between gap-2">
+                    <h3 className="font-semibold text-sm text-slate-900 break-words min-w-0 flex-1">{task.title}</h3>
+                    <button 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        deleteTask(task.id);
+                      }}
+                      className="opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-red-100 rounded text-slate-400 hover:text-red-600 shrink-0"
+                      title="Delete task"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </button>
+                  </div>
+                  
+                  <p className="text-xs text-slate-600 mt-1 line-clamp-2 break-words">{task.description}</p>
 
-                {/* parent flex container span left, middle, right */}
-                <div className="flex items-center justify-between mt-3">
-
-                  {/* left tag group */}
-                  {task.tags && task.tags.length > 0 && (
-                    <div className="flex items-center gap-1.5">
-                      <Tag className="h-3.5 w-3.5 text-slate-400" />
-                      <div className="flex flex-wrap gap-1">
-                        {task.tags.map((tag) => (
-                          <span key={tag} className="bg-slate-100 text-slate-600 text-[10px] px-1.5 py-0.5 rounded">
-                            #{tag}
-                          </span>
-                        ))}
+                  <div className="flex items-center justify-between mt-3">
+                    {task.tags && task.tags.length > 0 && (
+                      <div className="flex items-center gap-1.5 min-w-0">
+                        <Tag className="h-3.5 w-3.5 text-slate-400 shrink-0" />
+                        <div className="flex flex-wrap gap-1">
+                          {task.tags.map((tag) => (
+                            <span key={tag} className="bg-slate-100 text-slate-600 text-[10px] px-1.5 py-0.5 rounded break-all">
+                              #{tag}
+                            </span>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  )}   
+                    )}   
 
-                  {/* middle priority badge */}
-                  {task.priority && (
-                    <div className="flex items-center gap-1.5">
-                      {getpriorityicon(task.priority)}
-                      <span className={"text-[10px] font-bold px-1.5 py-0.5 rounded uppercase " + getprioritystyle(task.priority)}>
-                        {task.priority}
+                    {task.priority && (
+                      <div className="flex items-center gap-1.5 shrink-0">
+                        {getpriorityicon(task.priority)}
+                        <span className={"text-[10px] font-bold px-1.5 py-0.5 rounded uppercase " + getprioritystyle(task.priority)}>
+                          {task.priority}
+                        </span>
+                      </div>
+                    )}
+
+                    {task.dueDate && task.dueDate !== "" && (
+                      <span className="flex items-center gap-1 text-[10px] text-slate-500 font-medium shrink-0">
+                        <Calendar className="h-3.5 w-3.5 text-slate-400" />
+                        <span>{formatDueDate(task.dueDate)}</span>
                       </span>
-                    </div>
-                  )}
-
-                  {/* right side for due date */}
-                  {task.dueDate && task.dueDate !== "" && (
-                    <span className="flex items-center gap-1 text-[10px] text-slate-500 font-medium">
-                      <Calendar className="h-3.5 w-3.5 text-slate-400" />
-                      <span>{formatDueDate(task.dueDate)}</span>
-                    </span>
-                  )}
-
+                    )}
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
 
         {/* IN PROGRESS COLUMN */}
-        <div className="flex-1 bg-slate-200/50 border border-slate-200/80 rounded-xl p-4 min-h-[600px] flex flex-col gap-4">
+        <div className="flex-1 bg-slate-200/50 border border-slate-200/80 rounded-xl p-4 h-[calc(100vh-170px)] flex flex-col gap-4 min-w-0">
           <div className="flex items-center justify-between h-10">
             <div className="flex items-center gap-2">
               <h2 className="text-sm font-semibold text-slate-800">In-Progress</h2>
@@ -143,60 +144,69 @@ export default function Board({ onOpenNewTaskModal }) {
             </div>
           </div>
 
-          {/* Adding card to inprogress column */}
-          {inprogress.map((task) => {
-            return (
-              <div key={task.id} className="group relative bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-lg shadow-sm text-slate-800 transition-all hover:shadow-md">
-                <div className="flex items-start justify-between gap-2">
-                  <h3 className="font-semibold text-sm text-slate-900">{task.title}</h3>
-                  <button 
-                    onClick={() => deleteTask(task.id)}
-                    className="opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-red-100 rounded text-slate-400 hover:text-red-600 shrink-0"
-                    title="Delete task"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </button>
-                </div>
+          <div className="flex-1 overflow-y-auto flex flex-col gap-3 pr-1 py-1">
+            {/* Adding card to inprogress column */}
+            {inprogress.map((task) => {
+              return (
+                <div 
+                  key={task.id}
+                  onClick={() => onTaskClick(task)} 
+                  className="group relative bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-lg shadow-sm text-slate-800 transition-all hover:shadow-md cursor-pointer min-w-0"
+                >
+                  <div className="flex items-start justify-between gap-2">
+                    <h3 className="font-semibold text-sm text-slate-900 break-words min-w-0 flex-1">{task.title}</h3>
+                    <button 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        deleteTask(task.id);
+                      }}
+                      className="opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-red-100 rounded text-slate-400 hover:text-red-600 shrink-0"
+                      title="Delete task"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </button>
+                  </div>
 
-                <p className="text-xs text-slate-600 mt-1">{task.description}</p>
+                  <p className="text-xs text-slate-600 mt-1 line-clamp-2 break-words">{task.description}</p>
 
-                <div className="flex items-center justify-between mt-3">
-                  {task.tags && task.tags.length > 0 && (
-                    <div className="flex items-center gap-1.5">
-                      <Tag className="h-3.5 w-3.5 text-slate-400" />
-                      <div className="flex flex-wrap gap-1">
-                        {task.tags.map((tag) => (
-                          <span key={tag} className="bg-slate-100 text-slate-600 text-[10px] px-1.5 py-0.5 rounded">
-                            #{tag}
-                          </span>
-                        ))}
+                  <div className="flex items-center justify-between mt-3">
+                    {task.tags && task.tags.length > 0 && (
+                      <div className="flex items-center gap-1.5 min-w-0">
+                        <Tag className="h-3.5 w-3.5 text-slate-400 shrink-0" />
+                        <div className="flex flex-wrap gap-1">
+                          {task.tags.map((tag) => (
+                            <span key={tag} className="bg-slate-100 text-slate-600 text-[10px] px-1.5 py-0.5 rounded break-all">
+                              #{tag}
+                            </span>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
 
-                  {task.priority && (
-                    <div className="flex items-center gap-1.5">
-                      {getpriorityicon(task.priority)}
-                      <span className={"text-[10px] font-bold px-1.5 py-0.5 rounded uppercase " + getprioritystyle(task.priority)}>
-                        {task.priority}
+                    {task.priority && (
+                      <div className="flex items-center gap-1.5 shrink-0">
+                        {getpriorityicon(task.priority)}
+                        <span className={"text-[10px] font-bold px-1.5 py-0.5 rounded uppercase " + getprioritystyle(task.priority)}>
+                          {task.priority}
+                        </span>
+                      </div>
+                    )}
+
+                    {task.dueDate && task.dueDate !== "" && (
+                      <span className="flex items-center gap-1 text-[10px] text-slate-500 font-medium shrink-0">
+                        <Calendar className="h-3.5 w-3.5 text-slate-400" />
+                        <span>{formatDueDate(task.dueDate)}</span>
                       </span>
-                    </div>
-                  )}
-
-                  {task.dueDate && task.dueDate !== "" && (
-                    <span className="flex items-center gap-1 text-[10px] text-slate-500 font-medium">
-                      <Calendar className="h-3.5 w-3.5 text-slate-400" />
-                      <span>{formatDueDate(task.dueDate)}</span>
-                    </span>
-                  )}
+                    )}
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
         
         {/* DONE COLUMN */}
-        <div className="flex-1 bg-slate-200/50 border border-slate-200/80 rounded-xl p-4 min-h-[600px] flex flex-col gap-4">
+        <div className="flex-1 bg-slate-200/50 border border-slate-200/80 rounded-xl p-4 h-[calc(100vh-170px)] flex flex-col gap-4 min-w-0">
           <div className="flex items-center justify-between h-10">
             <div className="flex items-center gap-2">
               <h2 className="text-sm font-semibold text-slate-800">Done</h2>
@@ -206,56 +216,65 @@ export default function Board({ onOpenNewTaskModal }) {
             </div>
           </div>
 
-          {/* Adding card to done column */}
-          {done.map((task) => {
-            return (
-              <div key={task.id} className="group relative bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-lg shadow-sm text-slate-800 transition-all hover:shadow-md">
-                <div className="flex items-start justify-between gap-2">
-                  <h3 className="font-semibold text-sm text-slate-900">{task.title}</h3>
-                  <button 
-                    onClick={() => deleteTask(task.id)}
-                    className="opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-red-100 rounded text-slate-400 hover:text-red-600 shrink-0"
-                    title="Delete task"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </button>
-                </div>
+          <div className="flex-1 overflow-y-auto flex flex-col gap-3 pr-1 py-1">
+            {/* Adding card to done column */}
+            {done.map((task) => {
+              return (
+                <div 
+                  key={task.id} 
+                  onClick={() => onTaskClick(task)} 
+                  className="group relative bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-lg shadow-sm text-slate-800 transition-all hover:shadow-md cursor-pointer min-w-0"
+                >
+                  <div className="flex items-start justify-between gap-2">
+                    <h3 className="font-semibold text-sm text-slate-900 break-words min-w-0 flex-1">{task.title}</h3>
+                    <button 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        deleteTask(task.id);
+                      }}
+                      className="opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-red-100 rounded text-slate-400 hover:text-red-600 shrink-0"
+                      title="Delete task"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </button>
+                  </div>
 
-                <p className="text-xs text-slate-600 mt-1">{task.description}</p>
+                  <p className="text-xs text-slate-600 mt-1 line-clamp-2 break-words">{task.description}</p>
 
-                <div className="flex items-center justify-between mt-3">
-                  {task.tags && task.tags.length > 0 && (
-                    <div className="flex items-center gap-1.5">
-                      <Tag className="h-3.5 w-3.5 text-slate-400" />
-                      <div className="flex flex-wrap gap-1">
-                        {task.tags.map((tag) => (
-                          <span key={tag} className="bg-slate-100 text-slate-600 text-[10px] px-1.5 py-0.5 rounded">
-                            #{tag}
-                          </span>
-                        ))}
+                  <div className="flex items-center justify-between mt-3">
+                    {task.tags && task.tags.length > 0 && (
+                      <div className="flex items-center gap-1.5">
+                        <Tag className="h-3.5 w-3.5 text-slate-400" />
+                        <div className="flex flex-wrap gap-1">
+                          {task.tags.map((tag) => (
+                            <span key={tag} className="bg-slate-100 text-slate-600 text-[10px] px-1.5 py-0.5 rounded">
+                              #{tag}
+                            </span>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
 
-                  {task.priority && (
-                    <div className="flex items-center gap-1.5">
-                      {getpriorityicon(task.priority)}
-                      <span className={"text-[10px] font-bold px-1.5 py-0.5 rounded uppercase " + getprioritystyle(task.priority)}>
-                        {task.priority}
+                    {task.priority && (
+                      <div className="flex items-center gap-1.5">
+                        {getpriorityicon(task.priority)}
+                        <span className={"text-[10px] font-bold px-1.5 py-0.5 rounded uppercase " + getprioritystyle(task.priority)}>
+                          {task.priority}
+                        </span>
+                      </div>
+                    )}
+
+                    {task.dueDate && task.dueDate !== "" && (
+                      <span className="flex items-center gap-1 text-[10px] text-slate-500 font-medium">
+                        <Calendar className="h-3.5 w-3.5 text-slate-400" />
+                        <span>{formatDueDate(task.dueDate)}</span>
                       </span>
-                    </div>
-                  )}
-
-                  {task.dueDate && task.dueDate !== "" && (
-                    <span className="flex items-center gap-1 text-[10px] text-slate-500 font-medium">
-                      <Calendar className="h-3.5 w-3.5 text-slate-400" />
-                      <span>{formatDueDate(task.dueDate)}</span>
-                    </span>
-                  )}
+                    )}
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
 
       </div>

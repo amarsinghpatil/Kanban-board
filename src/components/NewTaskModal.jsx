@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { X, AlertCircle } from "lucide-react";
 import { useTask } from "../context/TaskContext";
 
-export default function NewTaskModal({ isOpen, onClose}) {
+export default function NewTaskModal({ isOpen, onClose, task }) {
 
   const { addTask } = useTask();
+  const { updateTask } = useTask();
 
   // 1. Hook memory variables MUST be at the very top of the component!
   const [title, setTitle] = useState("");
@@ -13,6 +14,26 @@ export default function NewTaskModal({ isOpen, onClose}) {
   const [priority, setPriority] = useState("medium");
   const [dueDate, setDueDate] = useState(""); 
   const [error, setError] = useState("");
+
+  console.log(task);
+
+  useEffect(() => { 
+      if (task) {
+        setTitle(task.title);
+        setDescription(task.description);
+        setTags(task.tags.join(", "));
+        setPriority(task.priority);
+        setDueDate(task.dueDate);
+      }
+      else {
+        setTitle("");
+        setDescription("");
+        setTags("");
+        setPriority("medium");
+        setDueDate(""); 
+        setError("");
+      }
+    }, [task]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -28,7 +49,19 @@ export default function NewTaskModal({ isOpen, onClose}) {
     }
 
     // Call addTask to save only what the user entered
-    addTask({
+
+    if (task) {
+      updateTask(task.id, {
+        title: title.trim(),
+        description: description.trim(),
+        status: task.status,
+        priority: priority,
+      dueDate: dueDate,
+      tags: taglist
+    });
+    
+    } else {
+        addTask({
       title: title.trim(),
       description: description.trim(),
       status: "todo",
@@ -36,6 +69,7 @@ export default function NewTaskModal({ isOpen, onClose}) {
       dueDate: dueDate,
       tags: taglist
     });
+  }
 
     // Clear the form fields and error for next time
     setTitle("");
@@ -63,8 +97,12 @@ export default function NewTaskModal({ isOpen, onClose}) {
 
         {/* Modal Header + Close Icon */}
         <div className="flex items-center justify-between"> 
-            <h2 className="text-xl font-semibold text-slate-800">New Task</h2>
-            <button onClick={() => { setError(""); onClose(); }}>
+            <h2 className="text-xl font-semibold text-slate-800">
+              {task ? "Edit Task" : "New Task"} {/* to diplay the title of the modal   */}
+            </h2>
+            <button onClick={() => { // clear error when closing // 4. Clear error state before closing the modal 
+              setError(""); 
+              onClose(); }}>
                 <X className="h-5 w-5 text-slate-500 hover:text-slate-700" />
             </button>
         </div>
@@ -147,7 +185,7 @@ export default function NewTaskModal({ isOpen, onClose}) {
               type="submit"
               className="w-full bg-yellow-400 hover:bg-yellow-500 text-slate-900 font-bold rounded-lg py-2.5 text-sm transition-colors shadow-md"
             >
-              + Create Task
+              {task ? "Save Changes" : "+ Create Task"} {/* to display the button text*/  }
             </button>
           </div>
         </form>
