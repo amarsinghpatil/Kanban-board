@@ -48,13 +48,13 @@ export function TaskProvider({ children }) {
     };
 
      // update task
-  const updateTask = (updatedTask) => {
+  const updateTask = (id, updatedFields) => {
       setTasks((prevTasks) => {
           
-          // Step 1: Create a new list where we swap the updated task
+          // Step 1: Create a new list where we update the target task
           const updatedList = prevTasks.map((task) => {
-              if (task.id === updatedTask.id) {
-                  return updatedTask; // Swap: Use the newly edited task
+              if (task.id === id) {
+                  return { ...task, ...updatedFields }; // Merge updated fields into task
               } else {
                   return task; // Keep: Leave this task unchanged
               }
@@ -81,9 +81,19 @@ export function TaskProvider({ children }) {
       });
   };
 
+  // Archive a task
+  const archiveTask = (taskId) => {
+      updateTask(taskId, { isArchived: true });
+  };
+
+  // Restore an archived task back to the active board
+  const unarchiveTask = (taskId) => {
+      updateTask(taskId, { isArchived: false });
+  };
+
     return(
         
-        <TaskContext.Provider value={{tasks, addTask, updateTask, deleteTask}}>
+        <TaskContext.Provider value={{tasks, addTask, updateTask, deleteTask, archiveTask, unarchiveTask}}>
             {children}
         </TaskContext.Provider> 
     )
