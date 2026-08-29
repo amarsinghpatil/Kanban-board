@@ -4,6 +4,12 @@ A modern, responsive, and interactive Kanban-style task management web applicati
 
 ---
 
+## 🌐 Live Demo
+
+🔗 **Live Application:** [View Live Kanban Board](https://kanban-board-two-nu.vercel.app) *(Powered by Vercel)*
+
+---
+
 ## ✨ Features
 
 - 🖐️ **Drag & Drop Interactions:** Smoothly move tasks between **To do**, **In-Progress**, and **Done** columns powered by `@hello-pangea/dnd`.
