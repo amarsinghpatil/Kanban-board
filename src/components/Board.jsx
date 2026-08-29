@@ -52,16 +52,26 @@ export default function Board({ onOpenNewTaskModal, onTaskClick }) {
     }
   }
 
+  /**
+   * 🖐️ handleOnDragEnd Callback Function
+   * 
+   * WHY THIS FUNCTION EXISTS:
+   * When a user releases a dragged card on the screen, <DragDropContext> calls this callback.
+   * It receives a `result` object containing:
+   * - `draggableId`: The unique ID string of the card dragged (e.g. "task-1")
+   * - `source`: Where the drag started ({ droppableId: "todo", index: 0 })
+   * - `destination`: Where the card was dropped ({ droppableId: "in-progress", index: 1 })
+   */
   const handleOnDragEnd = (result) => {
     console.log("🖐️ Drag Event Result:", result);
     const { destination, source, draggableId } = result;
 
-    // 1. If dropped outside any column container, cancel action
+    // STEP 1: Guard Clause — If card was dropped outside any valid column droppable zone, cancel action
     if (!destination) {
       return;
     }
 
-    // 2. If dropped in the exact same position in the same column, cancel action
+    // STEP 2: Guard Clause — If card was dropped in the exact same column and exact same list index, cancel action
     if (
       destination.droppableId === source.droppableId &&
       destination.index === source.index
@@ -69,7 +79,8 @@ export default function Board({ onOpenNewTaskModal, onTaskClick }) {
       return;
     }
 
-    // 3. Update task status in TaskContext to the destination column's droppableId
+    // STEP 3: State Update — Call updateTask from TaskContext to change task.status to the destination column ID!
+    // ("todo", "in-progress", or "done")
     updateTask(draggableId, { status: destination.droppableId });
   };
 
