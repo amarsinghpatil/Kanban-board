@@ -6,7 +6,7 @@ A modern, responsive, and interactive Kanban-style task management web applicati
 
 ## 🌐 Live Demo
 
-🔗 **Live Application:** [View Live Kanban Board](https://kanban-board-two-nu.vercel.app) *(Powered by Vercel)*
+🔗 **Live Application:** [View Live Kanban Board](https://kanban-board-one-sable.vercel.app/) *(Powered by Vercel)*
 
 ---
 
