@@ -125,19 +125,31 @@ export default function Board({ onOpenNewTaskModal, onTaskClick }) {
                             onClick={() => onTaskClick(task)} 
                             className="group relative bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-lg shadow-sm text-slate-800 transition-all hover:shadow-md cursor-pointer min-w-0"
                           >
-                            {/* Header row with Title and Hover Delete Button */}
+                            {/* Header row with Title and Hover Action Buttons */}
                             <div className="flex items-start justify-between gap-2">
                               <h3 className="font-semibold text-sm text-slate-900 break-words min-w-0 flex-1">{task.title}</h3>
-                              <button 
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  deleteTask(task.id);
-                                }}
-                                className="opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-red-100 rounded text-slate-400 hover:text-red-600 shrink-0"
-                                title="Delete task"
-                              >
-                                <Trash2 className="h-4 w-4" />
-                              </button>
+                              <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
+                                <button 
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    archiveTask(task.id);
+                                  }}
+                                  className="p-1 hover:bg-slate-200 rounded text-slate-400 hover:text-slate-700 transition-colors"
+                                  title="Archive task"
+                                >
+                                  <Archive className="h-4 w-4" />
+                                </button>
+                                <button 
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    deleteTask(task.id);
+                                  }}
+                                  className="p-1 hover:bg-red-100 rounded text-slate-400 hover:text-red-600 transition-colors"
+                                  title="Delete task"
+                                >
+                                  <Trash2 className="h-4 w-4" />
+                                </button>
+                              </div>
                             </div>
                             
                             <p className="text-xs text-slate-600 mt-1 line-clamp-2 break-words">{task.description}</p>
@@ -215,16 +227,28 @@ export default function Board({ onOpenNewTaskModal, onTaskClick }) {
                           >
                             <div className="flex items-start justify-between gap-2">
                               <h3 className="font-semibold text-sm text-slate-900 break-words min-w-0 flex-1">{task.title}</h3>
-                              <button 
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  deleteTask(task.id);
-                                }}
-                                className="opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-red-100 rounded text-slate-400 hover:text-red-600 shrink-0"
-                                title="Delete task"
-                              >
-                                <Trash2 className="h-4 w-4" />
-                              </button>
+                              <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
+                                <button 
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    archiveTask(task.id);
+                                  }}
+                                  className="p-1 hover:bg-slate-200 rounded text-slate-400 hover:text-slate-700 transition-colors"
+                                  title="Archive task"
+                                >
+                                  <Archive className="h-4 w-4" />
+                                </button>
+                                <button 
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    deleteTask(task.id);
+                                  }}
+                                  className="p-1 hover:bg-red-100 rounded text-slate-400 hover:text-red-600 transition-colors"
+                                  title="Delete task"
+                                >
+                                  <Trash2 className="h-4 w-4" />
+                                </button>
+                              </div>
                             </div>
 
                             <p className="text-xs text-slate-600 mt-1 line-clamp-2 break-words">{task.description}</p>
