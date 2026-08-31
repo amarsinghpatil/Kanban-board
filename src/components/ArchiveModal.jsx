@@ -142,16 +142,6 @@ export default function ArchiveModal({ isOpen, onClose }) {
 
         </div>
 
-        {/* 3. MODAL FOOTER */}
-        <div className="bg-slate-50 border-t border-slate-200 px-6 py-3 flex justify-end">
-          <button
-            onClick={onClose}
-            className="bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors"
-          >
-            Close
-          </button>
-        </div>
-
       </div>
     </div>
   );
